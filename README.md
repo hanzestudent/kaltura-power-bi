@@ -27,3 +27,9 @@ Deze variabelen moet je aanpassen:
 * DB_DATABASE=datawarehouse
 * DB_USERNAME=(user die je hebt aangemaakt)
 * DB_PASSWORD=(Paswoord voor username)
+
+Als laatst ga naar **XAMPP control panel** en klik op **config** bij MySQL -> **my.ini**
+Voeg hier onder de tag [mysqld] deze waarden toe:
+``innodb_large_prefix = On
+  innodb_file_per_table = On
+  innodb_file_format = Barracuda``
