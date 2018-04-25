@@ -568,50 +568,6 @@
             "time": "2015-04-20T18:58:01+00:00"
         },
         {
-            "name": "kaltura/api-client-library",
-            "version": "v13.18.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kaltura/KalturaGeneratedAPIClientsPHP53.git",
-                "reference": "4231a9d5b27008afd95ebf1f7bc22e75ec74417e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kaltura/KalturaGeneratedAPIClientsPHP53/zipball/4231a9d5b27008afd95ebf1f7bc22e75ec74417e",
-                "reference": "4231a9d5b27008afd95ebf1f7bc22e75ec74417e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Kaltura": "library"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "AGPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Kaltura",
-                    "homepage": "http://www.kaltura.org/"
-                }
-            ],
-            "description": "An auto generated Composer package for the Kaltura API client library",
-            "keywords": [
-                "api",
-                "client library",
-                "kaltura",
-                "open source video",
-                "video",
-                "video platform"
-            ],
-            "time": "2018-04-23T05:28:37+00:00"
-        },
-        {
             "name": "laravel/framework",
             "version": "v5.6.15",
             "source": {
