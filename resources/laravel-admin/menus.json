@@ -17,7 +17,7 @@
     {
       "section":"Settings",
       "items":[
-        {"title":"Configuration", "url":"\/admin\/configuration"}
+        {"title":"Configuration", "url":"\/admin\/configurations"}
       ]
     }
   ]
