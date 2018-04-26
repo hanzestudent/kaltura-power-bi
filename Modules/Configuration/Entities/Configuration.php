@@ -7,4 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Configuration extends Model
 {
     protected $fillable = ["path","value"];
+
+    /**
+     * Get Configuration
+     *
+     * @return \stdClass
+     */
+    public function getConfiguration($path) {
+        return Configuration::where('path', $path)->first();
+    }
 }
