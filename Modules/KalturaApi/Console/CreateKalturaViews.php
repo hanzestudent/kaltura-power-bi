@@ -134,10 +134,8 @@ class CreateKalturaViews extends Command
                     foreach ($playViewReportRows as $playViewReportRow) {
                         if(!empty($playViewReportRow)){
                         $playViewReportRowArray = explode(',',$playViewReportRow);
-                            var_dump($playViewReportRowArray);
                             $dtime = DateTime::createFromFormat("Ymd", $row[0]);
                             $timestamp = $dtime->getTimestamp();
-                            var_dump($timestamp);
                             $kalturaView = new KalturaView();
                             $kalturaView->kaltura_user_id = $playViewReportRowArray[0];
                             $kalturaView->kaltura_media_id = $mediaId;
@@ -152,8 +150,6 @@ class CreateKalturaViews extends Command
                                 $kalturaView->save();
                             } catch (\Exception $e){
                                 Log::warning('media '. $mediaId . 'Could not be added');
-                                var_dump($e->getMessage());
-                                die;
                                 return false;
                             }
                         }
