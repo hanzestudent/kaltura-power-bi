@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\Blackboard\Console\CreateBlackboardEducation;
 use Modules\KalturaApi\Console\CreateKalturaCategory;
 use Modules\KalturaApi\Console\CreateKalturaCategoryEntry;
 use Modules\KalturaApi\Console\CreateKalturaMediaEntries;
@@ -22,7 +23,8 @@ class Kernel extends ConsoleKernel
         CreateKalturaMediaEntries::class,
         CreateKalturaCategory::class,
         CreateKalturaCategoryEntry::class,
-        CreateKalturaViews::class
+        CreateKalturaViews::class,
+        CreateBlackboardEducation::class
     );
 
     /**
@@ -35,8 +37,6 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('create:kaltura:categoryEntry')->everyTenMinutes();
         $schedule->command('create:kaltura:views')->everyTenMinutes();
-        // $schedule->command('inspire')
-        //          ->hourly();
     }
 
     /**
