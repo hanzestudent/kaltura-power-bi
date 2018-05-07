@@ -1,0 +1,16 @@
+{
+    "name": "KalturaApi",
+    "alias": "kalturaapi",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\KalturaApi\\Providers\\KalturaApiServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

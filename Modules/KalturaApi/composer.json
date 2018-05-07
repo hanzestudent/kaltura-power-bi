@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/kalturaapi",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\KalturaApi\\Providers\\KalturaApiServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\KalturaApi\\": ""
+        }
+    }
+}
