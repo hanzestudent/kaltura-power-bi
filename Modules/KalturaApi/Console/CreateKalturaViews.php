@@ -6,7 +6,6 @@ use DateTime;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Kaltura\Client\Type\ReportGraph;
-use Kaltura\Client\Type\ReportTable;
 use Modules\KalturaApi\Entities\KalturaMedia;
 use Modules\KalturaApi\Entities\Api\Pager;
 use Modules\KalturaApi\Entities\Api\Report;
