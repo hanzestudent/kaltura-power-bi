@@ -4,7 +4,11 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\KalturaApi\Console\CreateKalturaCategory;
+use Modules\KalturaApi\Console\CreateKalturaCategoryEntry;
+use Modules\KalturaApi\Console\CreateKalturaMediaEntries;
 use Modules\KalturaApi\Console\CreateKalturaUsers;
+use Modules\KalturaApi\Console\CreateKalturaViews;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,7 +18,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = array(
-        CreateKalturaUsers::class
+        CreateKalturaUsers::class,
+        CreateKalturaMediaEntries::class,
+        CreateKalturaCategory::class,
+        CreateKalturaCategoryEntry::class,
+        CreateKalturaViews::class
     );
 
     /**
@@ -25,6 +33,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('create:kaltura:categoryEntry')->everyTenMinutes();
+        $schedule->command('create:kaltura:views')->everyTenMinutes();
         // $schedule->command('inspire')
         //          ->hourly();
     }

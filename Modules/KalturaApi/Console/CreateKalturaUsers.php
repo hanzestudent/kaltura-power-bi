@@ -6,8 +6,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Modules\Configuration\Entities\Configuration;
 use Modules\KalturaApi\Entities\KalturaUser;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use Modules\KalturaApi\Entities\Api\Pager;
 use Modules\KalturaApi\Entities\Api\User;
 
@@ -15,6 +13,8 @@ class CreateKalturaUsers extends Command
 {
     /**
      * This indicated how many rows Kaltura can max show
+     *
+     * ATTENTION: 10000 is max that can be retrieved
      *
      * @var integer
      */
@@ -87,12 +87,14 @@ class CreateKalturaUsers extends Command
                         $kalturaUser = new KalturaUser();
                         $kalturaUser->kaltura_user_id = $user->id;
                         $kalturaUser->status = $user->status;
-                        $kalturaUser->setCreatedAt(date("Y-m-d h:i:s", $user->createdAt));
-                        $kalturaUser->setUpdatedAt(date("Y-m-d h:i:s", $user->updatedAt));
+                        $kalturaUser->setCreatedAt(date("Y-m-d H:i:s", $user->createdAt));
+                        $kalturaUser->setUpdatedAt(date("Y-m-d H:i:s", $user->updatedAt));
                         try {
                             $kalturaUser->save();
                         } catch (\Exception $e){
                             Log::warning('User'. $user->id . 'Could not be added');
+                            var_dump($e);
+                            die;
                         }
                     }
                 }

@@ -24,6 +24,8 @@ use Kaltura\Client\Enum\UserOrderBy;
 class User
 {
     /**
+     * Unix timestamp
+     *
      * @var int
      */
     protected $createdAtGreaterThanOrEqual = '';

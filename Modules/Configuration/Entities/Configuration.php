@@ -11,6 +11,7 @@ class Configuration extends Model
     /**
      * Get Configuration
      *
+     * @param $path
      * @return \stdClass
      */
     public function getConfiguration($path) {

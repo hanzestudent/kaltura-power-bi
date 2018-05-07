@@ -2,23 +2,31 @@
 /**
  * Created by PhpStorm.
  * User: 275335
- * Date: 26-4-2018
- * Time: 14:22
+ * Date: 1-5-2018
+ * Time: 10:56
  */
 
 namespace Modules\KalturaApi\Entities\Api;
 
 
-use Kaltura\Client\Enum\MediaEntryOrderBy;
+use Kaltura\Client\Enum\CategoryOrderBy;
+use Kaltura\Client\Type\CategoryFilter;
+use Kaltura\Client\Type\CategoryListResponse;
 use Kaltura\Client\Type\FilterPager;
-use Kaltura\Client\Type\MediaEntryFilter;
 
-class Media
+class Category
 {
     /**
      * @var Client
      */
     private $client;
+
+    /**
+     * Order category By
+     *
+     * @var string
+     */
+    protected $orderBy = CategoryOrderBy::CREATED_AT_ASC;
 
     /**
      * Unix timestamp
@@ -28,37 +36,31 @@ class Media
     protected $createdAtGreaterThanOrEqual = '';
 
     /**
-     * Order Media By
-     *
-     * @var string
-     */
-    protected $orderBy = MediaEntryOrderBy::CREATED_AT_ASC;
-
-    /**
-     * User constructor.
+     * Category constructor.
      * @param Client $client
      */
     public function __construct(
         Client $client
     )
     {
+
         $this->client = $client;
     }
 
     /**
-     * Get a list of all media in Kaltura
+     * Get a list of all category in Kaltura
      *
      * @param $filter
      * @param $pager
-     * @return bool|\Kaltura\Client\Type\MediaListResponse
+     * @return bool|CategoryListResponse
      */
-    public function list(MediaEntryFilter $filter, FilterPager $pager) {
+    public function list(CategoryFilter $filter, FilterPager $pager) {
         /**
          * @var \Kaltura\Client\Client $client
          */
         $client = $this->client->getClient();
         try {
-            $result = $client->getMediaService()->listAction(
+            $result = $client->getCategoryService()->listAction(
                 $filter,
                 $pager
             );
@@ -69,11 +71,17 @@ class Media
         return $result;
     }
 
-    public function getMediaFilter($xml = null) {
-        $mediaFilter = new MediaEntryFilter($xml);
-        $mediaFilter->orderBy = $this->getOrderBy();
-        $mediaFilter->createdAtGreaterThanOrEqual = $this->getCreatedAtGreaterThanOrEqual();
-        return $mediaFilter;
+    /**
+     * Create Filter for category
+     *
+     * @param null $xml
+     * @return CategoryFilter
+     */
+    public function getCategoryFilter($xml = null) {
+        $categoryFilter = new CategoryFilter($xml);
+        $categoryFilter->orderBy = $this->getOrderBy();
+        $categoryFilter->createdAtGreaterThanOrEqual = $this->getCreatedAtGreaterThanOrEqual();
+        return $categoryFilter;
     }
 
     /**
@@ -107,5 +115,4 @@ class Media
     {
         $this->orderBy = $orderBy;
     }
-
 }
