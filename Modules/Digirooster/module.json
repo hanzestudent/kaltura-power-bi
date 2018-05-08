@@ -1,0 +1,16 @@
+{
+    "name": "Digirooster",
+    "alias": "digirooster",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Digirooster\\Providers\\DigiroosterServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
