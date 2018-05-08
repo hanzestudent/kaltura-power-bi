@@ -1,0 +1,16 @@
+{
+    "name": "Presentations2Go",
+    "alias": "presentations2go",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Presentations2Go\\Providers\\Presentations2GoServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

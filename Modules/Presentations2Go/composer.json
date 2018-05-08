@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/presentations2go",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Presentations2Go\\Providers\\Presentations2GoServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Presentations2Go\\": ""
+        }
+    }
+}
