@@ -10,6 +10,7 @@ use Modules\KalturaApi\Console\CreateKalturaCategoryEntry;
 use Modules\KalturaApi\Console\CreateKalturaMediaEntries;
 use Modules\KalturaApi\Console\CreateKalturaUsers;
 use Modules\KalturaApi\Console\CreateKalturaViews;
+use Modules\Presentations2Go\Console\CreatePresentations2GoRecordings;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +25,8 @@ class Kernel extends ConsoleKernel
         CreateKalturaCategory::class,
         CreateKalturaCategoryEntry::class,
         CreateKalturaViews::class,
-        CreateBlackboardEducation::class
+        CreateBlackboardEducation::class,
+        CreatePresentations2GoRecordings::class
     );
 
     /**

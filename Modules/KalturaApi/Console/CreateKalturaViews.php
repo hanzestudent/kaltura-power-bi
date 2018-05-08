@@ -66,6 +66,7 @@ class CreateKalturaViews extends Command
     public function handle()
     {
         $media = KalturaMedia::where('last_synced','<',date('Ymd'))->take(500)->get();
+        $result = true;
         foreach ($media as $mediaEntry) {
             $this->info( $mediaEntry->kaltura_media_id);
             if($mediaEntry->last_synced > 0) {
@@ -80,6 +81,7 @@ class CreateKalturaViews extends Command
                 $mediaEntry->kaltura_media_id
             );
             $countPlaysReport = $this->getCountPlays($responseGraph);
+            $this->info( $countPlaysReport->data);
             if($countPlaysReport && $countPlaysReport->data) {
                 $countPlaysReportRows = str_getcsv($countPlaysReport->data,';');
                 foreach ($countPlaysReportRows as $countPlaysReportRow) {
@@ -131,7 +133,9 @@ class CreateKalturaViews extends Command
                 if($responseTable && $responseTable->data) {
                     $playViewReportRows = str_getcsv($responseTable->data, ';');
                     foreach ($playViewReportRows as $playViewReportRow) {
+                        var_dump($playViewReportRow);
                         if(!empty($playViewReportRow)){
+                            var_dump($playViewReportRow);
                         $playViewReportRowArray = explode(',',$playViewReportRow);
                             $dtime = DateTime::createFromFormat("Ymd", $row[0]);
                             $timestamp = $dtime->getTimestamp();
