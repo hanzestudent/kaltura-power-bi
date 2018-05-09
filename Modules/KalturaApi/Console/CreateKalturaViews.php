@@ -65,7 +65,7 @@ class CreateKalturaViews extends Command
      */
     public function handle()
     {
-        $media = KalturaMedia::where('last_synced','<',date('Ymd'))->take(500)->get();
+        $media = KalturaMedia::where('last_synced','=',0)->take(1000)->get();
         $result = true;
         foreach ($media as $mediaEntry) {
             $this->info( $mediaEntry->kaltura_media_id);
