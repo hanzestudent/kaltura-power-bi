@@ -13,3 +13,4 @@ yarn-error.log
 .env
 /Modules/Presentations2Go/Xml/*
 /Modules/Blackboard/Csv/*
+/Modules/Digirooster/Csv/*
