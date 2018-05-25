@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Blackboard\Entities;
+namespace Modules\Datawarehouse\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class recording extends Model
+class DwCategory extends Model
 {
     protected $fillable = [];
 }
