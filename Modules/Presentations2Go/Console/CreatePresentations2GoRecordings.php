@@ -12,7 +12,16 @@ use Modules\Presentations2Go\Entities\recording;
 class CreatePresentations2GoRecordings extends Command
 {
     const presentations2goMaps = [
-        'ZP11_Auditorium'
+        'ZP17_Auditorium',
+        'ZP07_I201',
+        'ZP09_D232',
+        'ZP11_Auditorium',
+        'ZP23_C003',
+        'WBC_B111',
+        'WBC_B118',
+        'WBC_B157',
+        'MobieleSet_ZP11',
+        'MobieleSet_ZP17'
     ];
 
     /**
@@ -95,7 +104,6 @@ class CreatePresentations2GoRecordings extends Command
                      */
                     $months = array_diff(scandir($recordingsMonths), array('..', '.'));
                     foreach ($months as $month)  {
-                        var_dump($this->presentations2goLastSynced->value);
                         if( $year == $this->getDate($this->presentations2goLastSynced->value,'Y') &&
                         $month < $this->getDate($this->presentations2goLastSynced->value,'m')
                         ) {
@@ -122,7 +130,10 @@ class CreatePresentations2GoRecordings extends Command
                                 file_exists($recordingsOnDay.DIRECTORY_SEPARATOR.$x.DIRECTORY_SEPARATOR."recordingdetails.xml")
                             ) {
                                 $recordingOnDay = simplexml_load_file($recordingsOnDay.DIRECTORY_SEPARATOR.$x.DIRECTORY_SEPARATOR."recordingdetails.xml");
-                                $this->saveXmlToRecordings($recordingOnDay, $year.'-'.$month.'-'.$day);
+                                $added = $this->saveXmlToRecordings($recordingOnDay, $year.'-'.$month.'-'.$day, $presentations2goMap);
+                                if(!$added) {
+                                    die;
+                                }
                                 $x++;
                             }
                         }
@@ -137,9 +148,10 @@ class CreatePresentations2GoRecordings extends Command
      *
      * @param $xml
      * @param $dateOfMap
+     * @param $presentations2goMap
      * @return bool
      */
-    public function saveXmlToRecordings($xml,$dateOfMap) {
+    public function saveXmlToRecordings($xml,$dateOfMap,$presentations2goMap) {
         if(isset($xml->p2gRecord)) {
             $presentations2Go = $xml->p2gRecord;
             $author = $presentations2Go->contributors->contributor->name;
@@ -151,6 +163,7 @@ class CreatePresentations2GoRecordings extends Command
             $recording->creator_id = $author;
             $recording->duration = $presentations2Go->duration;
             $recording->recorded_at = $startTime;
+            $recording->device = $presentations2goMap;
             try {
                 $recording->save();
             } catch (Exception $e) {
@@ -162,14 +175,51 @@ class CreatePresentations2GoRecordings extends Command
             $presentations2Go = $xml->metadata;
             $firstArray = $presentations2Go[0];
             $secondArray = $presentations2Go[1];
-            $startTime = str_replace('T',' ',$secondArray->attribute[3]);
-            $recording = new Recording();
-            $recording->title = $firstArray->attribute[0];
-            $recording->description = $firstArray->attribute[1];
-            $recording->tags = isset($firstArray->attribute[2]) ? $firstArray->attribute[2] : '';
-            $recording->creator_id = $secondArray->attribute[1];
-            $recording->duration = $secondArray->attribute[0];
-            $recording->recorded_at = $startTime;
+            if(
+                isset($secondArray->attribute[0])
+                && is_int((int)$secondArray->attribute[0])
+                && strlen($secondArray->attribute[1]) ==4 ||
+                isset($secondArray->attribute[0])
+                && is_int((int)$secondArray->attribute[0])
+                && strlen($secondArray->attribute[1]) ==3
+            ) {
+                if(isset($secondArray->attribute[3])) {
+                    $isItADate = DateTime::createFromFormat('Y-m-d H:i:s', str_replace('T', ' ', $secondArray->attribute[3]));
+                    if($isItADate) {
+                        $startTime = str_replace('T', ' ', $secondArray->attribute[3]);
+                    } else {
+                        $startTime = str_replace('T', ' ', $secondArray->attribute[2]);
+                    }
+                } else {
+                    $startTime = str_replace('T', ' ', $secondArray->attribute[2]);
+                }
+                $recording = new Recording();
+                $recording->title = $firstArray->attribute[0];
+                $recording->description = $firstArray->attribute[1];
+                $recording->tags = isset($firstArray->attribute[2]) ? $firstArray->attribute[2] : '';
+                $recording->creator_id = $secondArray->attribute[1];
+                $recording->duration = $secondArray->attribute[0];
+                $recording->recorded_at = $startTime;
+                $recording->device = $presentations2goMap;
+            } else {
+                $recording = new Recording();
+                $recording->title = $secondArray->attribute[0];
+                $recording->description = $secondArray->attribute[1];
+                $recording->tags = isset($secondArray->attribute[2]) ? $secondArray->attribute[2] : '';
+                $recording->device = $presentations2goMap;
+                if(strlen($firstArray->attribute[0]) == 4) {
+                    $startTime = str_replace('T', ' ', $firstArray->attribute[3]);
+                    $recording->creator_id = $firstArray->attribute[0];
+                    $recording->duration = $firstArray->attribute[2];
+                    $recording->recorded_at = $startTime;
+                } else {
+                    $startTime = str_replace('T', ' ', $firstArray->attribute[2]);
+                    $recording->creator_id = $firstArray->attribute[3];
+                    $recording->duration = $firstArray->attribute[1];
+                    $recording->recorded_at = $startTime;
+                }
+
+            }
             try {
                 $recording->save();
             } catch (Exception $e) {
