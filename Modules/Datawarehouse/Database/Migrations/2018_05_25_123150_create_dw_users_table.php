@@ -14,12 +14,9 @@ class CreateDwUsersTable extends Migration
     public function up()
     {
         Schema::create('dw_users', function (Blueprint $table) {
-            $table->string('user_id', 255)->comment("Kaltura User Id");
+            $table->string('id', 255)->primary()->comment("Kaltura User Id");
             $table->string('type',255)->nullable(true)->comment("What type of user is it");
             $table->timestamps();
-            $table->string('object_type', 255)
-                ->nullable()
-                ->comment("KalturaUser");
         });
     }
 

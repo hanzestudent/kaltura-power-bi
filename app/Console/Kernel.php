@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Blackboard\Console\CreateBlackboardEducation;
+use Modules\Datawarehouse\Console\ActivateEtlProces;
 use Modules\Digirooster\Console\CreateDigirooster;
 use Modules\KalturaApi\Console\CreateKalturaCategory;
 use Modules\KalturaApi\Console\CreateKalturaCategoryEntry;
@@ -28,7 +29,8 @@ class Kernel extends ConsoleKernel
         CreateKalturaViews::class,
         CreateBlackboardEducation::class,
         CreatePresentations2GoRecordings::class,
-        CreateDigirooster::class
+        CreateDigirooster::class,
+        ActivateEtlProces::class
     );
 
     /**

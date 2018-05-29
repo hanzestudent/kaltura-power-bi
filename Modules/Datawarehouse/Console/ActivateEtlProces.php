@@ -3,8 +3,22 @@
 namespace Modules\Datawarehouse\Console;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
+use Modules\Datawarehouse\Entities\Transformation\TCategories;
+use Modules\Datawarehouse\Entities\Transformation\TCategoryEntries;
+use Modules\Datawarehouse\Entities\Transformation\TCourses;
+use Modules\Datawarehouse\Entities\Transformation\TEducation;
+use Modules\Datawarehouse\Entities\Transformation\TMedia;
+use Modules\Datawarehouse\Entities\Transformation\TRecordings;
+use Modules\Datawarehouse\Entities\Transformation\TUsers;
+use Modules\Datawarehouse\Entities\DwCategory;
+use Modules\Datawarehouse\Entities\DwCategoryEntry;
+use Modules\Datawarehouse\Entities\DwCourse;
+use Modules\Datawarehouse\Entities\DwEducation;
+use Modules\Datawarehouse\Entities\DwMedia;
+use Modules\Datawarehouse\Entities\DwRecording;
+use Modules\Datawarehouse\Entities\DwUser;
+use Modules\Datawarehouse\Entities\DwViews;
+use Modules\Datawarehouse\Entities\Transformation\TView;
 
 class ActivateEtlProces extends Command
 {
@@ -13,23 +27,138 @@ class ActivateEtlProces extends Command
      *
      * @var string
      */
-    protected $name = 'command:name';
+    protected $name = 'activate:etlProces:now';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'Transform data and load into database';
+    /**
+     * @var DwCategory
+     */
+    private $dwCategory;
+    /**
+     * @var DwCategoryEntry
+     */
+    private $dwCategoryEntry;
+    /**
+     * @var DwCourse
+     */
+    private $dwCourse;
+    /**
+     * @var DwEducation
+     */
+    private $dwEducation;
+    /**
+     * @var DwMedia
+     */
+    private $dwMedia;
+    /**
+     * @var DwRecording
+     */
+    private $dwRecording;
+    /**
+     * @var DwUser
+     */
+    private $dwUser;
+    /**
+     * @var DwViews
+     */
+    private $dwViews;
+    /**
+     * @var TUsers
+     */
+    private $tUsers;
+    /**
+     * @var TEducation
+     */
+    private $tEducation;
+    /**
+     * @var TCourses
+     */
+    private $tCourses;
+    /**
+     * @var TCategories
+     */
+    private $tCategories;
+    /**
+     * @var TRecordings
+     */
+    private $tRecordings;
+    /**
+     * @var TMedia
+     */
+    private $tMedia;
+    /**
+     * @var TCategoryEntries
+     */
+    private $tCategoryEntries;
+    /**
+     * @var TView
+     */
+    private $tView;
+
 
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param DwCategory $dwCategory
+     * @param DwCategoryEntry $dwCategoryEntry
+     * @param DwCourse $dwCourse
+     * @param DwEducation $dwEducation
+     * @param DwMedia $dwMedia
+     * @param DwRecording $dwRecording
+     * @param DwUser $dwUser
+     * @param DwViews $dwViews
+     * @param TUsers $tUsers
+     * @param TEducation $tEducation
+     * @param TCourses $tCourses
+     * @param TCategories $tCategories
+     * @param TRecordings $tRecordings
+     * @param TMedia $tMedia
+     * @param TCategoryEntries $tCategoryEntries
+     * @param TView $tView
      */
-    public function __construct()
+    public function __construct(
+        DwCategory $dwCategory,
+        DwCategoryEntry $dwCategoryEntry,
+        DwCourse $dwCourse,
+        DwEducation $dwEducation,
+        DwMedia $dwMedia,
+        DwRecording $dwRecording,
+        DwUser $dwUser,
+        DwViews $dwViews,
+        TUsers $tUsers,
+        TEducation $tEducation,
+        TCourses $tCourses,
+        TCategories $tCategories,
+        TRecordings $tRecordings,
+        TMedia $tMedia,
+        TCategoryEntries $tCategoryEntries,
+        TView $tView
+    )
     {
         parent::__construct();
+
+        $this->dwCategory = $dwCategory;
+        $this->dwCategoryEntry = $dwCategoryEntry;
+        $this->dwCourse = $dwCourse;
+        $this->dwEducation = $dwEducation;
+        $this->dwMedia = $dwMedia;
+        $this->dwRecording = $dwRecording;
+        $this->dwUser = $dwUser;
+        $this->dwViews = $dwViews;
+
+        $this->tUsers = $tUsers;
+        $this->tEducation = $tEducation;
+        $this->tCourses = $tCourses;
+        $this->tCategories = $tCategories;
+        $this->tRecordings = $tRecordings;
+        $this->tMedia = $tMedia;
+        $this->tCategoryEntries = $tCategoryEntries;
+        $this->tView = $tView;
     }
 
     /**
@@ -39,30 +168,28 @@ class ActivateEtlProces extends Command
      */
     public function handle()
     {
-        //
+        $this->deleteAllInDataWarehouse();
+        //$this->tUsers->transformUsers();
+        //$this->tEducation->transformEducation();
+        //$this->tCourses->transformCourses();
+        //$this->tCategories->transformCategories();
+        //$this->tRecordings->transformRecordings();
+        //$this->tMedia->transformMedia();
+        //$this->tCategoryEntries->transformCategoryEntries();
+        $this->tView->transformViews();
     }
 
     /**
-     * Get the console command arguments.
-     *
-     * @return array
+     * Delete all rows in data warehouse
      */
-    protected function getArguments()
-    {
-        return [
-            ['example', InputArgument::REQUIRED, 'An example argument.'],
-        ];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
-        ];
+    public function deleteAllInDataWarehouse() {
+        $this->dwViews->deleteAll();
+        //$this->dwCategoryEntry->deleteAll();
+        //$this->dwMedia->deleteAll();
+        //$this->dwCategory->deleteAll();
+        //$this->dwCourse->deleteAll();
+        //$this->dwEducation->deleteAll();
+        //$this->dwRecording->deleteAll();
+        //$this->dwUser->deleteAll();
     }
 }
