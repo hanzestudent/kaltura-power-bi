@@ -3,6 +3,8 @@
 namespace Modules\Datawarehouse\Console;
 
 use Illuminate\Console\Command;
+use Modules\Datawarehouse\Entities\DwUsersEducation;
+use Modules\Datawarehouse\Entities\Load\UsersEducation;
 use Modules\Datawarehouse\Entities\Transformation\TCategories;
 use Modules\Datawarehouse\Entities\Transformation\TCategoryEntries;
 use Modules\Datawarehouse\Entities\Transformation\TCourses;
@@ -99,6 +101,14 @@ class ActivateEtlProces extends Command
      * @var TView
      */
     private $tView;
+    /**
+     * @var UsersEducation
+     */
+    private $lUsersEducation;
+    /**
+     * @var DwUsersEducation
+     */
+    private $dwUsersEducation;
 
 
     /**
@@ -112,6 +122,7 @@ class ActivateEtlProces extends Command
      * @param DwRecording $dwRecording
      * @param DwUser $dwUser
      * @param DwViews $dwViews
+     * @param DwUsersEducation $dwUsersEducation
      * @param TUsers $tUsers
      * @param TEducation $tEducation
      * @param TCourses $tCourses
@@ -120,6 +131,7 @@ class ActivateEtlProces extends Command
      * @param TMedia $tMedia
      * @param TCategoryEntries $tCategoryEntries
      * @param TView $tView
+     * @param UsersEducation $lUsersEducation
      */
     public function __construct(
         DwCategory $dwCategory,
@@ -130,6 +142,7 @@ class ActivateEtlProces extends Command
         DwRecording $dwRecording,
         DwUser $dwUser,
         DwViews $dwViews,
+        DwUsersEducation $dwUsersEducation,
         TUsers $tUsers,
         TEducation $tEducation,
         TCourses $tCourses,
@@ -137,7 +150,8 @@ class ActivateEtlProces extends Command
         TRecordings $tRecordings,
         TMedia $tMedia,
         TCategoryEntries $tCategoryEntries,
-        TView $tView
+        TView $tView,
+        UsersEducation $lUsersEducation
     )
     {
         parent::__construct();
@@ -150,6 +164,7 @@ class ActivateEtlProces extends Command
         $this->dwRecording = $dwRecording;
         $this->dwUser = $dwUser;
         $this->dwViews = $dwViews;
+        $this->dwUsersEducation = $dwUsersEducation;
 
         $this->tUsers = $tUsers;
         $this->tEducation = $tEducation;
@@ -159,6 +174,8 @@ class ActivateEtlProces extends Command
         $this->tMedia = $tMedia;
         $this->tCategoryEntries = $tCategoryEntries;
         $this->tView = $tView;
+
+        $this->lUsersEducation = $lUsersEducation;
     }
 
     /**
@@ -171,23 +188,25 @@ class ActivateEtlProces extends Command
         $this->deleteAllInDataWarehouse();
         //$this->tUsers->transformUsers();
         //$this->tEducation->transformEducation();
+        $this->lUsersEducation->importUsersEducation();
         //$this->tCourses->transformCourses();
         //$this->tCategories->transformCategories();
         //$this->tRecordings->transformRecordings();
         //$this->tMedia->transformMedia();
         //$this->tCategoryEntries->transformCategoryEntries();
-        $this->tView->transformViews();
+        //$this->tView->transformViews();
     }
 
     /**
      * Delete all rows in data warehouse
      */
     public function deleteAllInDataWarehouse() {
-        $this->dwViews->deleteAll();
+        //$this->dwViews->deleteAll();
         //$this->dwCategoryEntry->deleteAll();
         //$this->dwMedia->deleteAll();
         //$this->dwCategory->deleteAll();
         //$this->dwCourse->deleteAll();
+        $this->dwUsersEducation->deleteAll();
         //$this->dwEducation->deleteAll();
         //$this->dwRecording->deleteAll();
         //$this->dwUser->deleteAll();

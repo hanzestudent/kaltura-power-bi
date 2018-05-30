@@ -51,6 +51,9 @@ class TMedia
             /**
              * @var $saMedia KalturaMedia
              */
+            if($saMedia->getMediaType() == 2) {
+                continue;
+            }
             $dwMedia = new DwMedia();
             $dwMedia->setId($saMedia->getId());
             $dwMedia->setRecordingId($this->getRecording($saMedia));
