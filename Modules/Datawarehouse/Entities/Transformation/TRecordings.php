@@ -29,6 +29,11 @@ class TRecordings
     private $anonymize;
 
     /**
+     * @var string
+     */
+    private $minDate;
+
+    /**
      * TRecordings constructor.
      * @param recording $recording
      * @param Anonymize $anonymize
@@ -102,7 +107,7 @@ class TRecordings
      * @return DwRecording
      */
     public function matchDigirooster($dwRecording,$saRecording) {
-        if($this->getDate($saRecording->getRecordedAt(),'Y-m-d','Y-m-d H:i:s') >= '2018-01-01') {
+        if($this->getDate($saRecording->getRecordedAt(),'Y-m-d','Y-m-d H:i:s') >= $this->getMinDate()) {
             $saDigirooster = Digirooster::query()->select([
                     Digirooster::object_id,
                     Digirooster::name,
@@ -140,6 +145,18 @@ class TRecordings
             }
         }
         return $dwRecording;
+    }
+
+    /**
+     * Get minimum date
+     *
+     * @return mixed|string
+     */
+    public function getMinDate() {
+        if(!$this->minDate) {
+            $this->minDate = Digirooster::query()->min(Digirooster::start_date);
+        }
+        return $this->minDate;
     }
 
     /**
