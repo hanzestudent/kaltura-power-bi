@@ -14,3 +14,4 @@ yarn-error.log
 /Modules/Presentations2Go/Xml/*
 /Modules/Blackboard/Csv/*
 /Modules/Digirooster/Csv/*
+/Modules/Datawarehouse/Csv/*

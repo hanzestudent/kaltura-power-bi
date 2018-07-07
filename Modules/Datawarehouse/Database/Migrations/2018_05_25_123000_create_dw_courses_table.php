@@ -14,6 +14,7 @@ class CreateDwCoursesTable extends Migration
     public function up()
     {
         Schema::create('dw_courses', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('course_id',255)->comment("Course id from blackboard");
             $table->string('education_code',255)->nullable(true)->comment("Course id from blackboard");
             $table->string('name',255)->nullable(true)->comment("Course name for course id");

@@ -14,8 +14,8 @@ class CreateDwMediaTable extends Migration
     public function up()
     {
         Schema::create('dw_media', function (Blueprint $table) {
-            $table->string('id', 255)->comment("Kaltura Media Id");
-            $table->integer('recording_id');
+            $table->string('id', 255)->primary()->comment("Kaltura Media Id");
+            $table->integer('recording_id')->unsigned()->nullable(true);
             $table->mediumText('name')->comment("Name of media entry");
             $table->text('description')->nullable(true)->comment("description thats provided for the video");
             $table->integer('media_type')->comment("What type of media is this. class MediaType");

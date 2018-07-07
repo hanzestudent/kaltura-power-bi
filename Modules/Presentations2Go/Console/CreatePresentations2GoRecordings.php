@@ -7,7 +7,7 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Modules\Configuration\Entities\Configuration;
-use Modules\Presentations2Go\Entities\recording;
+use Modules\Presentations2Go\Entities\Recording;
 
 class CreatePresentations2GoRecordings extends Command
 {
