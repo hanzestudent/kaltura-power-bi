@@ -41,8 +41,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+		$schedule->command('create:kaltura:media')->everyTenMinutes();
+		$schedule->command('create:kaltura:users')->everyTenMinutes();
+		$schedule->command('create:kaltura:category')->everyTenMinutes();
         $schedule->command('create:kaltura:categoryEntry')->everyTenMinutes();
-        $schedule->command('create:kaltura:views')->everyTenMinutes();
+        $schedule->command('create:kaltura:views')->everyThirtyMinutes();
+		$schedule->command('activate:etlProces:now')->weekly();
     }
 
     /**
