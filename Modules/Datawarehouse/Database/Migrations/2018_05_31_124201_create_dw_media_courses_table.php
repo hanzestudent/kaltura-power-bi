@@ -19,7 +19,7 @@ class CreateDwMediaCoursesTable extends Migration
             $table->integer('course_id')->unsigned();
             $table->foreign('course_id')->references('id')->on('dw_courses');
             $table->foreign('media_id')->references('id')->on('dw_media');
-            $table->unique(['category_id','media_id']);
+            $table->unique(['course_id','media_id']);
         });
     }
 
